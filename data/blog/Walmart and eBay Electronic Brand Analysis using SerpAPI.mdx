@@ -1,0 +1,298 @@
+---
+title: 'Walmart and eBay Electronic Brand Analysis using SerpAPI'
+date: '2021-07-12'
+lastmod: '2022-02-01'
+tags: ['python', 'SerpAPI', 'data-analysis']
+draft: false
+summary: 'In a bit to compare Walmart and eBay. It is noted that eBay is better than Walmart in selling Electronics of all brands. And reviews are one of the best factors to consider in stocking products on a selling platform.'
+
+images: ['/static/images/canada/canada/wallmart.jpg', '/static/images/canada/data2.jpg']
+authors: ['default']
+---
+
+![tailwind-nextjs-banner](/static/images/canada/data2.jpg)
+
+# Walmart and eBay Electronic Brand Analysis using SerpAPI
+
+In a bit to compare Walmart and eBay. It is noted that eBay is better than Walmart in selling Electronics of all brands. And reviews are one of the best factors to consider in stocking products on a selling platform. Let's deep dive into how to use SerpApi to extract, visualize, analyse and draw conclusions about this data.
+
+### Requirements:
+
+<ol>
+  <li>Python 3.x.x</li>
+  <li>VS Code/Jupyter Notebook</li>
+</ol>
+
+Import Libraries
+
+```python
+import re
+import json
+import time
+import pandas as pd
+import plotly.express as px
+from serpapi import GoogleSearch
+import warnings
+warnings.filterwarnings("ignore", 'This pattern has match groups')
+```
+
+### Lets get started.
+
+The complete code for the tutorial can be found Here
+
+### Data Extraction
+Once you have signed up, navigate to the Ebay Search API which has a variety of options of structured data to extract. A SerpApi, api_key will be generated and attached to every code required to help you extract data.
+
+### Use Case
+
+We will go with organic data which is the raw structured data for electronic data. We will attempt to analyze Samsung, Hisense, Sony and TCL products in the eBay and Walmart platforms.
+
+### This is the data we are required to extract.
+
+### Let's dig in:
+
+Once you are in the Ebay Search API, click on the eBay Search API drop-down menu then click on the organic results. This will lead you to a code block that contains the code for the data extract we desire:
+We will extract the data of electronic brands from the Walmart and the eBay market platforms using the respective APIs. To achieve this, on a trial basis. First, we will need to sign up for the SerpApi services.
+
+![serp-api](/static/images/Serp-API.png)
+
+```python
+from serpapi import GoogleSearch
+
+params = {
+   "engine" : "ebay",
+   "_nkw": "Coffee",
+   "api_key": "search_api_key"
+}
+
+search = GoogleSearch(params)
+results = search.get_dict()
+organic_results = results['organic_results']
+
+```
+From the above, we will develop our Walmart and eBay data extraction tools.
+
+### Tools
+
+### Ebay Tool
+
+Check out the documentation below to get started.
+
+```python
+api_key =  "serp_api_key"
+engine_search = "ebay"
+
+# Ebay products:
+products = [
+    {"name":"engine", "query":"sony"},
+    {"name":"engine", "query":"samsung"},
+    {"name":"engine", "query":"tcl"},
+    {"name":"engine", "query":"lg"},
+    {"name":"engine", "query":"hisense"}
+    #{"name":"engine", "query":"name_of_product"}   
+]
+
+ebay_data = pd.DataFrame([])
+
+for product in products:
+    params = {
+        product['name']:engine_search, 
+        "_nkw": product['query'],
+        "api_key": api_key
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    organic_results = results['organic_results']
+    ebay_data = ebay_data.append(pd.json_normalize(organic_results), ignore_index = True)
+```
+The products list contain multiple parameter dictionaries that we would love to loop in to acquire the specified electronic brands of interest. All the data will be appended in the empty data frame initialized:ebay_data.
+
+> Using for loop we perform the scraping using the SerpApi query. The organic results contain a .json data of all the brand products in the Ebay platform. We transform the json data into a data frame using the json_normalize function from the pandas package and append for each parameter value.
+
+### The same is applied to the Walmart data:
+
+### Walmart Tool
+
+```python
+api_key =  "serp_api_key"
+engine_search = "walmart"
+
+# Walmart products:
+products = [
+    {"name":"engine", "query":"sony"},
+    {"name":"engine", "query":"samsung"},
+    {"name":"engine", "query":"tcl"},
+    {"name":"engine", "query":"lg"},
+    {"name":"engine", "query":"hisense"}   
+]
+
+walmart_data = pd.DataFrame([])
+
+for product in products:
+    params = {
+        product['name']:engine_search, 
+        "query": product['query'],
+        "api_key": api_key
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    organic_results = results['organic_results']
+    walmart_data = walmart_data.append(pd.json_normalize(organic_results), ignore_index = True)
+```
+### Data Cleaning
+
+### In cleaning data:
+
+From the product titles, extract the brand names for easy manipulation.
+
+```python
+# List of brands
+L = ['Samsung', 'Hisense','TCL','Sony']
+pat = '|'.join(r"\b{}\b".format(x) for x in L)
+
+# Extract the brand names, making all characters small for merging
+ebay_data['brand'] = ebay_data['title'].str.findall(pat, flags=re.I).str.join(' ')
+ebay_data = ebay_data.apply(lambda x: x.astype(str).str.lower())
+ebay_data['brand'] = ebay_data['brand'].str.replace(r'\b(\w+)(\s+\1)+\b', r'\1', regex=True)
+```
+
+1. In the eBay data, from the extensions variable, extract the number of items so far sold.
+
+```python
+#From the items_sold, extract the minimum integer value of the brand items sold as of the date of data extraction
+
+# Define the function to remove the punctuation
+ebay_data['extensions'] = ebay_data['extensions'].str.replace('[^\w\s]','',  regex=True)
+ebay_data['extensions'] = ebay_data.extensions.str.extract('(\d+)')
+```
+2. Another advantage of the data extracted from eBay and the Walmart search API has few missing variables, thus dropping the missing row data leaves us with sufficient data for analysis.
+
+```python
+# Drop all the missing values: this will/may not help in our analysis.
+# Drop missing values
+ebay_data.dropna()
+
+# Drop title variable
+ebay_data.drop('title', inplace=True, axis=1)
+```
+Replicate the same steps for the Walmart data. With this, our data is ready for analysis. Find the above step by step processes on the .py file in this GitHub repository.
+
+### Visualization
+
+We will analyze the markets with visuals while answering the common business analysts questions that tend to have an impact on investment.
+
+### What is the best platform for selling electronic brands?
+### Code:
+
+```python
+#Brand Analysis
+#Aggregate the number of products for each brand and market
+
+ebay_brands = ebay_data[['brand', 'market']].reset_index()
+walmart_brands = walmart_data[['brand', 'market']].reset_index()
+market_brands = pd.concat([ebay_brands, walmart_brands], ignore_index=True)
+count_series = market_brands.groupby(['brand', 'market']).size()
+count_series = count_series.to_frame(name = 'size').reset_index()
+count_series['brand'] = count_series['brand'].replace(r'^\s*$', 'lg', regex=True)
+count_series.drop(count_series.tail(1).index,inplace=True)
+```
+
+To answer the above one will first extract the brand and market variables from the Walmart and eBay data. We will then summarize the count of each brand in each market then plot the groupings. Below are the results:
+
+### Output:
+![output1](/static/images/output1.png)
+
+Across all brands, electronic products are acquired by consumers more on eBay than Walmart. In analytics, this is what we would call descriptive analysis. But why is this so?
+
+### 2. Why are there more brands selling on eBay?
+In diagnostic analytics, we seek to know why consumers buying preference is from eBay rather than Walmart. Normally, we know that the extra cost to acquire a product is a put off on any consumer. As a factor, has shippingcost-influenced the customers to buy more from eBay?
+
+### The answer to this is from the below visual produced by the code:
+
+```python
+#Shipping cost effect on the sales of a brand in Ebay?
+#Group the data by shipping status and the number of sales:
+
+ebay_data['shipping'] = ebay_data['shipping'].replace("nan", "with shipping cost", regex=True)
+ebay_data['shipping'] = ebay_data['shipping'].str.replace('[^\w\s]','',  regex=True)
+
+ebay_data.loc[ebay_data.shipping.str.contains('(\d+)')  == True, 'shipping'] = 'with shipping cost'
+
+# Required data
+shipped_sales = ebay_data[['brand', 'shipping', 'extensions']].reset_index()
+shipped_sales['extensions'] = pd.to_numeric(shipped_sales['extensions'])
+
+# Aggregate the data by the grouping
+shipped_sales = shipped_sales.groupby(['shipping','brand'])['extensions'].sum().reset_index()
+shipped_sales["extensions"] = pd.to_numeric(shipped_sales ["extensions"])
+shipped_sales['brand'] = shipped_sales['brand'].replace(r'^\s*$', 'lg', regex=True)
+shipped_sales = shipped_sales.drop(labels=[5,7,13], axis=0)
+
+# Visual
+fig = px.bar(shipped_sales, x="brand", y="extensions", color="shipping")
+fig.show()
+```
+
+### Output:
+
+![output2](/static/images/output2.png)
+
+We see from the above output that free shipping on eBay has influenced buyers to acquire electronic products irrespective of the brand. This is but one of many factors that consumers focus on while meeting their needs. If one can acquire a product at the least cost possible, that is an option one would take, and eBay seems to offer such an option.
+
+### 3. What are some of the factors a company should consider when determining a platform on which to stock a product?
+
+In understanding the above, perform a correlation analysis. The below are the results of the analysis:
+
+![output3](/static/images/output3.jpeg)
+
+### The analysis was carried on eBay data.
+
+It is clear that reviews have a strong positive items_sold. Thus, one of the factors that a company can consider while making the decision to increase their stock on a selling platform is the number of reviews on that particular product, generally. Whether the reviews are positive or negative is another concern. This can be determined by sentimental analysis. This is still possible as the SerpApi gives us an option to scrape sentiments on products and thereafter perform the required analysis.
+
+### Below is the code to reproduce the correlation plot:
+
+```python
+#Correlation in Ebay sales
+#Extract data:
+
+cor = ebay_data[['price.extracted', 'extensions', 'reviews']].reset_index()
+
+#Drop data whose values are not known
+cor_data = cor_data[~cor.reviews.str.contains("nan")]
+col = cor.columns.drop('index')
+cor[col] = cor [col].apply(pd.to_numeric, errors='coerce')
+
+import matplotlib.pyplot as plt
+import numpy as np
+import seaborn as sns
+plt.figure(figsize=(16, 6))
+mask = np.triu(np.ones_like(cor.corr(), dtype=np.bool))
+heatmap = sns.heatmap(cor.corr(), mask=mask, vmin=-1, vmax=1, annot=True, cmap='BrBG')
+```
+Here is a scatterplot showing the relationship between reviews against items sold:
+
+![output4](/static/images/output4.png)
+
+The cost of a product, irrespective of the brand has an implication on the number of products sold. The variation differs from individuals across economical brackets.
+
+We also have seen that number of reviews have a positive effect on sales. Is there a relationship between prices and review? See the diagram below;
+
+### Diagram:
+
+![output5](/static/images/output5.png)
+
+An increase in prices has a significant yet slight increase in the reviews. This is consistent as consumers may desire quality for their expense.
+
+### Ending:
+
+The complete code for the tutorial can be found [Here](https://github.com/Mabwacharles/brand-analysis-SerpApi)
+
+Please view the Walmart Search API documentation: https://serpapi.com/walmart-search-api
+
+Ebay Search API documentation: https://serpapi.com/ebay-search-api
+
+You can also contribute to our user forum here: https://forum.serpapi.com/
+
+If you'd like to contribute either by sharing suggestions, recommendations and any questions, feel free to drop a comment in the comment section or reach out via Twitter at [mabwacharles](https://twitter.com/mabwacharles)
