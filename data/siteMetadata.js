@@ -1,8 +1,8 @@
 const siteMetadata = {
-  title: 'Next.js Starter Blog',
-  author: 'Tails Azimuth',
-  headerTitle: 'TailwindBlog',
-  description: 'A blog created with Next.js and Tailwind.css',
+  title: 'Mabwa Charles Blog',
+  author: 'Mabwa Charles',
+  headerTitle: 'Mabwa Charles',
+  description: 'Welcome to my personal blog, a place where I share my thoughts, experiences, projects and insights on various topics close to my heart. Through my blog, I aim to create a space for meaningful conversations and discussions.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',

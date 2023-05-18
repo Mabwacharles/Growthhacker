@@ -1,0 +1,111 @@
+---
+title: 'SerpApi YouTube Data Extraction Tool: Ep 1'
+date: '2021-08-12'
+tags: ['data science', 'data visualization', 'webscrapping']
+draft: false
+summary: 'YouTube is an American online video sharing and social media platform owned by Google. With many people shifting to digital online broadcasting, the platform has grown exponentially. YouTube data has become a major part of the analysis in machine learning and data analytics.'
+---
+
+### Introduction
+
+YouTube is an American online video sharing and social media platform owned by Google. With many people shifting to digital online broadcasting, the platform has grown exponentially. YouTube data has become a major part of the analysis in machine learning and data analytics.
+
+Using SerpApi we will extract YouTube data and query it for analysis.
+
+### Prerequisites
+
+The product is easy to use and flexible to tailor across multiple YouTube content depending on the field of interest. However, one will require a mid-level knowledge and understanding of:
+
+<ol>
+  <li>Python</li>
+  <li>VS code and/or Jupyter Notebook</li>
+</ol>
+
+### Tool
+
+To have access to the general tool, go to the [YouTube Search API](https://serpapi.com/youtube-search-api). The below tool has been tailored to extract [video results](https://serpapi.com/youtube-video-results) based on searches of desired facets of the data analytics, data science and data engineers tools:
+
+```python
+import pandas as pd
+from serpapi import GoogleSearch
+import json
+
+api_key =  "serp_api_key"
+engine_search = "youtube"
+
+#data analysis tools:
+code_langs = [
+    {"name":"engine", "query":"sql"},
+    {"name":"engine", "query":"excel"},
+    {"name":"engine", "query":"tableau"},
+    {"name":"engine", "query":" microsoft azure"},
+    {"name":"engine", "query":"amazon web services"},
+    {"name":"engine", "query":"r programming"}
+    #{"name":"engine", "query":"name_of_product"}   
+]
+
+data_vids = pd.DataFrame([])
+
+for lang in code_langs:
+    params = {
+        lang['name']:engine_search, 
+        "search_query": lang['query'],
+        "api_key": api_key
+    }
+
+    search = GoogleSearch(params)
+    results = search.get_dict()
+    playlist_results = results['video_results']
+    data_vids = data_vids.append(pd.json_normalize(playlist_results), ignore_index = True)
+    data_vids.to_csv('code_languages.csv')
+```
+
+The tool uses pandas and SerpApi libraries. One is required to have a basic familiarity with the two. In case you are beginning to use the product and are new to python, it is possible that you should first install the required libraries using conda install or pip install.
+
+The code_langs is a tailored list of parameters to be looped over and desired video results appended in the data frame data_vids. For example:
+
+```python
+{"name":"engine", "query":" microsoft azure"},
+```
+
+Using for loop the tool will return microsoft azure content from YouTube. This will be the case for all the queried lists in the code_langs until all the desired videos are appended.
+
+The data is then stored in a CSV file, find the CSV file [here](https://github.com/Mabwacharles/Youtube_SerpApi_tool/blob/main/code_languages.csv)
+
+### Data
+
+The data extracted has 13 columns. The first 10 are the essential columns with variables that could trigger an analysis.
+
+```python
+
+position_on_page    title   link    published_date  views   length  description extensions  channel.name    channel.link    channel.verified    channel.thumbnail   thumbnail.static    thumbnail.rich  
+
+```
+
+### These variables include:
+
+a. position on the page: This is the position of the specific video upon the search of a data analytics, data science or engineering tool.
+
+b. title: The title of the video. This tells what the video is all about.
+
+c. published_date: The date the video was uploaded on YouTube.
+
+d. views: The number of people who have watched the video.
+
+e. length:This tells the duration it takes to watch the video.
+
+f. channel.name: The channel from which a video was retrieved.
+
+To further know how to extract channel details, visit [Channel Results](https://serpapi.com/youtube-channel-results)
+
+Check out Part 2 of this article where we handle the Youtube views analysis and Prediction.
+
+### Ending:
+
+The complete code to the tool can be found in this [Github Repo](https://github.com/Mabwacharles/Youtube_SerpApi_tool)
+
+YouTube Search API documentation: https://serpapi.com/youtube-search-api
+
+You can also contribute to our user forum here: https://forum.serpapi.com/
+
+If you'd like to contribute either by sharing suggestions, recommendations and any questions, feel free to drop a comment in the comment section or reach out to me via Twitter at [mabwa](https://twitter.com/mabwacharles)
