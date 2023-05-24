@@ -2,7 +2,7 @@ const siteMetadata = {
   title: 'Mabwa Charles Blog',
   author: 'Mabwa Charles',
   headerTitle: 'Mabwa Charles',
-  description: 'Welcome to my personal blog, a place where I share my thoughts, experiences, projects and insights on various topics close to my heart. Through my blog, I aim to create a space for meaningful conversations and discussions.',
+  description: 'Welcome to my personal blog, a platform dedicated to sharing my insightful perspectives, experiences, and projects on a diverse range of topics that resonate with me deeply. This blog serves as an interactive space fostering engaging conversations and thought-provoking discussions. Join me on this journey of exploration and enlightenment.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
