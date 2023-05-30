@@ -1,5 +1,17 @@
 const projectsData = [
   {
+    title: 'Celo Kenya CodeJam',
+    description: `The Celo Kenya Code Jam is a monthly event that brings together talented developers, programmers, and tech enthusiasts in Kenya to showcase their skills and creativity in building innovative solutions on the Celo blockchain.`,
+    imgSrc: '/static/images/canada/codejam.jpeg',
+    href: 'https://www.linkedin.com/feed/update/urn:li:activity:7069282270267793408/',
+  },
+  {
+    title: 'Unleashing the Power of blockchain in Game Design',
+    description: `Blockchain technology has the potential to create a new paradigm in game design, empowering players, and providing them with unique experiences, ownership, and economic opportunities. In this compelling episode, we ventured into the expansive realm of blockchain and its profound impact on game design.`,
+    imgSrc: '/static/images/canada/blockchain-gamedesign.jpeg',
+    href: 'https://twitter.com/i/spaces/1jMKgLvBBlwGL',
+  },
+  {
     title: 'Strathmore Workshop',
     description: `The Celo Web3 Workshop 101 at Strathmore University introduced participants to Web3 and blockchain through Celo. It covered Celo's mobile-first platform, decentralized finance, and practical use cases on building on Celo. The workshop facilitated collaboration and knowledge sharing, equipping attendees with skills and understanding to explore decentralized finance and build on Celo.`,
     imgSrc: '/static/images/canada/CeloStrathmore.jpg',
