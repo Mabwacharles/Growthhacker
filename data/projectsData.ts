@@ -1,6 +1,6 @@
 const projectsData = [
   {
-    title: 'Celo Kenya CodeJam',
+    title: 'Celo Kenya May CodeJam',
     description: `The Celo Kenya Code Jam is a monthly event that brings together talented developers, programmers, and tech enthusiasts in Kenya to showcase their skills and creativity in building innovative solutions on the Celo blockchain.`,
     imgSrc: '/static/images/canada/codejam.jpeg',
     href: 'https://www.linkedin.com/feed/update/urn:li:activity:7069282270267793408/',

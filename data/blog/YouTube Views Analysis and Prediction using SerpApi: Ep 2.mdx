@@ -1,16 +1,191 @@
 ---
-title: 'YouTube Views Analysis and Prediction: Ep 3'
-date: '2021-10-12'
+title: 'YouTube Views Analysis and Prediction using SerpApi: Ep 2'
+date: '2021-08-12'
 tags: ['Web Scrapping', 'Data Analysis', 'Visualization']
-draft: true
-summary: 'In a bit to compare Walmart and eBay. It is noted that eBay is better than Walmart in selling Electronics of all brands. And reviews are one of the best factors to consider in stocking products on a selling platform.'
+draft: false
+summary: 'From the data extracted using YouTube Search API, it can only be useful if used to deduce conclusions from which decision can be made. This is the whole idea behind machine learning. The data extracted from the SerpApi YouTube Data Extraction contained YouTube video content for the data manipulating tools.'
 
 images: ['/static/images/canada/canada/wallmart.jpg', '/static/images/canada/data2.jpg']
 authors: ['default']
 ---
 
-![tailwind-nextjs-banner](/static/images/canada/data2.jpg)
+![tailwind-nextjs-banner](/static/images/canada/freepik.jpg)
+
+From the data extracted using [YouTube Search API](https://serpapi.com/youtube-search-api), it can only be useful if used to deduce conclusions from which decision can be made. This is the whole idea behind machine learning. The data extracted from the [SerpApi YouTube Data Extraction](https://serpapi.com/blog/serpapi-youtube-data-extraction-tool/) contained YouTube video content for the data manipulating tools.
+
+From one end, a learner would desire to know what type of tools are commonly studied and searched. This would suggest the particular tool with many views is what the market demands. This insight can be deduced from the number of videos extracted and the number of views in each video. On the other hand for a blogger, who is already skilled in specific data tools and desires to venture into creating content for learners. He would desire to know the tools which have not been well taught based on the number of views registered.
+
+The blogger also desires to know what is the scale of growth and start earning from the content created. This will be deduced by training the data with a regression model.
+
+### Prerequisites
+
+We will be using VS Code in this analysis and Python 3 interpreter. One might as well use Jupyter Notebook or Pycharm IDEdepending on your preference. Mid-level knowledge of scikit-learn is required as well as the models used in machine learning. We will also be using the linear regression model.
+
+### Setting Environment
+
+Import the required libraries as follows:
+
+``` python
+from datetime import timedelta
+from dateutil import parser
+import seaborn as sns
+import pandas as pd
+import numpy as np
+import warnings
+import re
+
+warnings.filterwarnings("ignore")
+```
+
+If the above libraries have not yet been installed, you can do so using pip install or the conda install depending on your preference.
+
+### Import Data
+
+From the [YouTube SerpApi tool](https://github.com/Mabwacharles/Youtube_SerpApi_tool), the data extracted was stored in a CSV format. To import it, we will use the read.csv from the pandas library as follows:
+
+```python 
+# Import csv file:
+data = pd.read_csv(r'Data/code_languages.csv')
+```
+
+### Cleaning data and Feature engineering
+
+The raw data extracted presents us with quality information which we will require to restructure before committing it to a model. Below are the steps taken:
+
+<ol>
+  <li>From the title, variable extract the tools that were searched using the [YouTube SearchApi tool](https://github.com/Mabwacharles/Youtube_SerpApi_tool).</li>
+  <li>From the published_date extract the numeric figures.</li>
+  <li>Modify the length of each video extracted to be in seconds. This answers the question, how long is the video?</li>
+  <li>Finally, replace the missing values in the channel.verified with “False”. Assuming they are not verified.</li>
+</ol>
+
+### To do the above follow:
+
+```python
+# Extract tool name from title:
+# Names of tools:
+tools = ['SQL', 'MySQL','Excel','Tableau', 'Azure', 'AWS','R']
+pat = '|'.join(r"\b{}\b".format(x) for x in tools)
+data['tool'] = data['title'].str.extract('('+ pat + ')', expand=False, flags=re.I)
+# Extract the age of  video; time past since video was posted:
+data['duration_from_posted'] = data.published_date.str.extract('(\d+)')
+# Length of the video in seconds
+data['length'] = data['length'].str.strip()
+data['length'] = pd.to_datetime(data['length'],format='%H:%M:%S',errors='coerce').fillna(pd.to_datetime(data['length'], format='%M:%S', errors='coerce'))
+time = pd.to_datetime('1900-01-01 00:00:00', format =  "%Y-%m-%d %H:%M:%S")
+time_delta = (data['length']  - time).astype('timedelta64[s]')
+data['length'] = time_delta
+# Replace NA in channel.verified assuming missing means False
+data[ 'channel.verified'] = data[ 'channel.verified'].replace(np.nan, "False")
+```
+
+From these restructured data we will need the title of the tool, the age of the videos, the views gained overtime and the status of the channel verification:
+
+```python
+# Required data:
+cols = ['tool', 'duration_from_posted', 'length', 'channel.verified', 'views']
+req_data = data[cols]
+```
+
+### Correlation Analysis
+
+We would like to know what are the factors that affect the number of views. Numerically, the length of the video may have an implication on the views a content gets. Also, time posted has an effect on the eventual views a video can get. As initially proved the more a video stays on the YouTube platform the more likely it is to be viewed.To what extent, though, does the length of a video and the duration since posted affect the views gained on content? This can be answered by a heatmap generated by:
+
+```python
+# Correlation heatmap
+num_data = req_data[['duration_from_posted', 'length', 'views']]
+cols = ['duration_from_posted', 'views', 'length']
+# Convert all columns to numeric
+num_data[cols] = num_data[cols].apply(lambda x: pd.to_numeric(x, errors='coerce'))
+# Drop all missing values
+num_data = num_data.dropna()
+# View heatmap
+sns.heatmap(num_data.corr(),  annot=True)
+```
+### Output
+
+![tailwind-nextjs-banner](/static/images/canada/grab.png)
+
+The length has a positive effect on the views. This suggests that preferentially many learners prefer in-depth tutoring for tools in data analytics, data science and data engineering. A blogger venturing in this field should therefore have excellent knowledge in this field to be able to explain in broader lengths the concepts required.
+
+How old a video content does not guarantee more views on the YouTube platform. Though weak in effect, this can be deliberate against the hypothesis of common knowledge that suggests the older the video the more the views. This, however, can only be consistent if the content in the video produced in time past is needed today; i.e. the relevance of the video content.
+
+### Regression Model
+
+```python
+# Divide data into attributes and labels
+X = num_data.iloc[:, 0:2].values
+y = num_data.iloc[:, 2].values #Views
+
+# Divide the data into training and testing sets
+from sklearn.model_selection import train_test_split
+X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.2, random_state=0)
+
+# Training a linear regression model
+from sklearn import linear_model
+from sklearn.metrics import mean_squared_error, r2_score
+
+# Build model
+model = linear_model.LinearRegression()
+model.fit(X_train, y_train)
+
+# Apply trained model to predict logS from the training and test set
+y_pred_train = model.predict(X_train)
+
+print('Coefficients:', model.coef_)
+print('Intercept:', model.intercept_)
+print('Mean squared error (MSE): %.2f'
+      % mean_squared_error(y_train, y_pred_train))
+print('Coefficient of determination (R^2): %.2f'
+      % r2_score(y_train, y_pred_train))
+```
+In formulating the model we used the length of a video and the duration since posted as independent factors and the number of views as the dependent factor. 20% of our data was used as a test case. The train data was subjected to a linear regression model.
+
+### Test Data
+
+### Fitting the model in the test data:
+
+```python
+#  apply the trained model to make predictions on the test set
+y_pred_test = model.predict(X_test)
+# Evaluation
+print('Coefficients:', model.coef_)
+print('Intercept:', model.intercept_)
+print('Mean squared error (MSE): %.2f'
+      % mean_squared_error(y_test, y_pred_test))
+print('Coefficient of determination (R^2): %.2f'
+      % r2_score(y_test, y_pred_test))
+```
+
+The regression equation obtained with an acceptable 82.234% model accuracy is as follows:
+
+```python
+# Regression equation
+yintercept = '%.2f' % model.intercept_
+dp = '%.2f dp' % model.coef_[0]
+lt = '%.4f lt' % model.coef_[1]
+print('Views = ', yintercept,  '+', dp, '+', lt )
+```
+
+### Output:
+
+![tailwind-nextjs-banner](/static/images/canada/output.png)
+
+The equation unlike the correlation effect suggests that both the length of the video and the age on the video content have an incremental effect on views. The analysis can be differentiated from the type of content posted based on categories of the kind of content created. It would therefore be wise for the platform to include channel categories for such an analysis to take place.
+
+### Conclusion
+
+It is therefore advised that any vlogger desiring to produce data tools content should:
+
+<ul>
+  <li>Start producing the video content now. This will give them the advantage of views over time.</li>
+  <li>Produce detailed content for the tools teaching all viewers. This helps the vlogger attain Youtube viewing time that will enable them to monetize their content faster.</li>
+</ul>
 
 
 
-Test Body
+### Ending
+
+The complete code can be found in this [Github repo](https://github.com/Mabwacharles/Analysis-and-Prediction-Model).
+
+If you’d like to contribute either by sharing suggestions, recommendations and any questions, feel free to drop a comment in the comment section or reach out to me via Twitter at [@mabwa](https://twitter.com/mabwacharles),
