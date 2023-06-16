@@ -1,5 +1,11 @@
 const projectsData = [
   {
+    title: 'Regenerative Finance for Sustainable Agriculture Twitter Space',
+    description: `Regenerative finance (ReFi) 🌱 is an emerging financial system that aims to align financial incentives with the regeneration of natural and social systems. It is based on the principles of regenerative economics, which argues that the economy should be designed to create wealth in a way that is beneficial to all and does not harm the environment. I recently held an informative twitter space on Regenerative Finance, listen in below`,
+    imgSrc: '/static/images/canada/refi.jpeg',
+    href: 'https://twitter.com/i/spaces/1RDGlarDeMMJL?s=20',
+  },
+  {
     title: 'Celo Kenya May CodeJam',
     description: `The Celo Kenya Code Jam is a monthly event that brings together talented developers, programmers, and tech enthusiasts in Kenya to showcase their skills and creativity in building innovative solutions on the Celo blockchain.`,
     imgSrc: '/static/images/canada/codejam.jpeg',
