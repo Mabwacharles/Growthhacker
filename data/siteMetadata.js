@@ -2,7 +2,8 @@ const siteMetadata = {
   title: 'Mabwa Charles Blog',
   author: 'Mabwa Charles',
   headerTitle: 'Mabwa Charles',
-  description: 'Welcome to my personal blog, a platform dedicated to sharing my insightful perspectives, experiences, and projects on a diverse range of topics that resonate with me deeply. This blog serves as an interactive space fostering engaging conversations and thought-provoking discussions. Join me on this journey of exploration and enlightenment.',
+  description:
+    'Welcome to my personal blog, a platform dedicated to sharing my insightful perspectives, experiences, and projects on a diverse range of topics that resonate with me deeply. This blog serves as an interactive space fostering engaging conversations and thought-provoking discussions. Join me on this journey of exploration and enlightenment.',
   language: 'en-us',
   theme: 'system', // system, dark or light
   siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
@@ -10,7 +11,7 @@ const siteMetadata = {
   siteLogo: '/static/images/logo.png',
   image: '/static/images/avatar.png',
   socialBanner: '/static/images/twitter-card.png',
-  email: 'address@yoursite.com',
+  email: 'mabwacharles@gmail.com',
   github: 'https://github.com',
   twitter: 'https://twitter.com/Twitter',
   facebook: 'https://facebook.com',
@@ -24,7 +25,7 @@ const siteMetadata = {
     plausibleDataDomain: '', // e.g. tailwind-nextjs-starter-blog.vercel.app
     simpleAnalytics: false, // true or false
     umamiWebsiteId: '', // e.g. 123e4567-e89b-12d3-a456-426614174000
-    googleAnalyticsId: '', // e.g. UA-000000-2 or G-XXXXXXX
+    googleAnalyticsId: 'G-X12FLDQHHC', // e.g. UA-000000-2 or G-XXXXXXX
   },
   newsletter: {
     // supports mailchimp, buttondown, convertkit, klaviyo, revue
