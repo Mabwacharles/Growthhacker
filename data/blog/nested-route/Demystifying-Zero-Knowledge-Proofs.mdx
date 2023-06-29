@@ -2,6 +2,48 @@
 title: Demystifying Zero-Knowledge Proofs
 date: '2023-06-22'
 tags: ['zkEVMs', 'zkSNARKs', 'Architecture']
-draft: true
+draft: false
 summary: 'Zero-knowledge proofs (ZKPs) are a cryptographic technique that can be used to prove the validity of a statement without revealing the underlying information.'
 ---
+
+Zero-knowledge proofs is a cryptographic technology that allows a certain information or statement to be proved as true or not without actually revealing the information or statement itself, this enhances privacy and security in blockchain protocols.
+
+Zero-knowledge proof (ZK proof) technologies enable one party to prove to another party that they know a piece of information without actually sharing the information with another party in order to prove their knowledge.
+
+ZKPs are already being used by many DeFi projects to give customers better privacy and security for services like lending, borrowing, and trading.
+
+### Types of Zero Knowledge Proofs
+
+<ol>
+  <li>
+    <strong>Interactive ZKP</strong>:{' '}
+  </li>{' '}
+  Under the Interactive ZKP the prover must complete a series of actions and tasks to prove to the
+  verifier that they know and have a certain piece of information.
+  <li>
+    <strong>Non-Interactive ZKP</strong>:{' '}
+  </li> Non-interactive Zero-Knowledge Proofs do not require an interactive process between the prover
+  and verifier. This types of ZKPs require more computational power as compared to Interactive Zero Knowledge
+  Proof.
+</ol>
+
+### The essential properties of a ZKP
+
+<ol>
+  <li>
+    <strong> Completeness</strong>:{' '}
+  </li>{' '}
+  If the input is valid, the zero-knowledge protocol always returns ‘true’. Hence, if the underlying
+  statement is true, and the prover and verifier act honestly, the proof can be accepted.
+  <li>
+    <strong> Soundness</strong>:{' '}
+  </li> If the input is invalid, it is theoretically impossible to fool the zero-knowledge protocol to
+  return ‘true’. If the statement is false, no efficient prover can convince the verifier otherwise,
+  except with negligible probability.
+  <li>
+    <strong>Zero-knowledge</strong>:{' '}
+  </li>{' '}
+  The verifier learns nothing about a statement beyond its validity or falsity (they have “zero
+  knowledge” of the statement). This requirement also prevents the verifier from deriving the
+  original input (the statement’s contents) from the proof.
+</ol>
