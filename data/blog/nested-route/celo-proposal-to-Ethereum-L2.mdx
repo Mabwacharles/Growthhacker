@@ -7,3 +7,114 @@ summary: 'This proposal outlines the initiative to transition Celo, the blockcha
 ---
 
 Celo, a decentralized platform, has gained significant traction and community engagement due to its inclusive and accessible nature. However, as the network's user base grows and the demand for transactions increases, scalability challenges arise. By leveraging Ethereum Layer 2, Celo aims to address these concerns effectively.
+
+### Introduction
+
+The Celo Whitepaper 10 was released in 2018, centered around addressing the biggest barriers to global crypto adoption as a means of payment. With the whitepaper being centered around a mission of global prosperity, Ethereum’s equally mission-driven vision 1 appealed to the Celo co-founders and early team. However, from a technical perspective, limitations around scalability and consensus mechanisms proved to be a barrier to directly building on Ethereum, leading to the eventual launch of the Celo mainnet: the first carbon-negative, EVM-compatible proof-of-stake (PoS) Layer 1, launching on Earth Day 2020.
+
+Even so, the Celo community has continued to monitor the progress of Ethereum, paying specific attention to the developments around Ethereum’s rollup centric roadmap 4. As such, the Celo community has been future-proofing later-stage ETH2 milestones (e.g., light clients, single-slot finality and usability) and deliberating how Ethereum’s advances could lead to an improvement of the Celo mainnet. In this forum post, we detail an upgrade proposal of the Celo mainnet based on Ethereum’s rollup advancements, specifying its mission value proposition, implications for the community and high-level technical design.
+
+### Why now
+
+Celo’s technology inherits from and owes a lot to Ethereum. Our communities overlap, as do our visions for building a fairer financial system on decentralized technology. As L2 research has developed, it has become a viable path by which to allow Celo to align even more closely with Ethereum — by connecting trustlessly with it, and leveraging its economic security.
+
+Two key advances make us believe the time is now:
+
+<ol>
+  <li>
+    Off-chain data availability solutions like EigenDA enable this to be achieved without
+    necessitating steep increases in Celo’s transaction fees, in a way that still contributes to
+    Ethereum (and Ethereum validators that opt into EigenLayer).
+  </li>
+  <li>
+    The OP stack has created an incredible, open reference architecture for optimistic rollups and
+    chains.
+  </li>
+</ol>
+
+### Value Proposition of the upgrade
+
+<ol>
+  <li>
+    Increased Cross-Community Collaboration – Historically, Celo’s technical roadmap has aligned
+    closely to that of Ethereum, being early adopters of Ethereum Improvement Proposals (EIP) such
+    as EIP-1559 (gas fee reductions) and EIP-4337 (account abstraction). While learning from
+    proposals as they’ve been released, officially aligning to the Ethereum community offers the
+    Celo ecosystem an opportunity to not only collaborate with the Ethereum community on existing
+    EIPs, but also introduce our own, with near term examples being exploring standard for off-chain
+    data availability and
+  </li>
+  <li>
+    Enhanced Compatibility – While Celo has been an EVM compatible chain since inception,
+    considerable work is needed on the backend to ensure that tooling and libraries maintain
+    composability through upgrades of the Celo geth fork or core Web3 libraries. Migrating Celo to
+    utilize the OP stack eliminates the need to monitor compatibility, making it easy for Celo
+    developers to utilize the full gambit of Ethereum tooling / libraries.
+  </li>
+  <li>
+    Increased Security – Currently, Celo is secured by a set of 110 validators 2 which in turn are
+    elected by ~300M in locked CELO. While this offers a significant level of decentralization and
+    economic security, moving to an L2 architecture can improve that security threshold multifold by
+    anchoring the state on the Ethereum mainnet, while using a decentralized source for data
+    availability.
+  </li>
+  <li>
+    Maintained Low Gas Fees – We expect no material change of gas fees. As the proposal is for an L2
+    solution with off-chain data availability, gas costs can be a lot lower than on other L2s which
+    opt for on-chain data availability such as Optimism or zkSync era.
+  </li>
+</ol>
+
+### Proposed Upgrade
+
+The modular structure of the OP Stack and their interoperable vision of the future L2 ecosystem makes it a natural starting point upon which we can build the features prioritized by members of the Celo ecosystem. However, using Ethereum as the DA layer (as Optimism currently does) would be prohibitively expensive for many projects in the Celo ecosystem. Additionally, one of the defining features of Celo is its 1-block finality and absence of reorgs. Our goal with this design is to continue providing great UX for Celo users and developers with minimal changes to fees, finality, and Celo-specific features, while also providing as much increased security as possible. To do this, we propose creating a Celo L2 client based on the OP Stack with the following modifications or feature additions:
+
+<ol>
+  <li>
+    Decentralizing the sequencer role by using Celo’s existing production-grade pBFT 2 consensus
+    (battle-tested over the last 3 years) and validator set to provide improved censorship
+    resistance and liveness properties.
+  </li>
+  <li>
+    Provide reorg resistance with Celo’s security guarantees by: Slashing validators who share
+    divergent blocks on the p2p network vs. on the DA layer in order to provide reorg resistance to
+    unsafe L2 blocks. Reading only deposited transactions from finalized L1 blocks to minimize the
+    effect of reorgs on Ethereum
+  </li>
+  <li>
+    Use EigenDA for off-chain data availability (DA) to reduce transaction fees while providing
+    increased security to Celo users and aligning more strongly with Ethereum.
+  </li>
+</ol>
+
+### Potential Effects on the Celo Community
+
+<ul>
+  <li>
+    <strong>Validators:</strong> Validators have and will continue to play a critical role in the
+    health of the Celo ecosystem. Validator responsibilities have traditionally included the
+    ordering and processing of transactions, which is expected to continue. This proposal leverages
+    Celo’s current validators and transforms them into the sequencers for the L2. Thanks to them,
+    Celo will be based on one of the first (if not the first) decentralized sequencer and deliver
+    1-block finality on a L2. The one change for both validators and full node operators would be
+    the need to also run an Ethereum node (or access to a trusted one) since any L2 node needs to
+    observe the L1 (Ethereum) to derive the canonical chain.
+  </li>
+  <li>
+    <strong>Developers:</strong> Developers should approach the upgrade with a similar mindset as if
+    a hard fork upgrade was happening: no changes to what Celo offers them now, only some important
+    improvements. First, besides having 1-block finality secured by Celo stake, there would also be
+    a stronger (but slower) finality guarantee derived from Ethereum’s economic security and EigenDA
+    security. Second, they’ll have access to a native bridge to Ethereum, increasing the
+    composability of Celo dApps with Ethereum. Finally, an additional censorship resistance
+    mechanism will allow Celo transactions to be posted directly into Ethereum to force their
+    inclusion.
+  </li>
+  <li>
+    <strong>End users:</strong> End users will not notice any change. Gas fees would have immaterial
+    changes due to the data availability layer of the proposed L2 being managed off-chain, reducing
+    costs to align closely with Celo L1 gas fees and significantly lower than alternative L2s such
+    as Optimism and zkSync. In addition, end users will benefit indirectly through the adoption of
+    Ethereum’s security model in addition to Celo’s battle-tested Proof-of-Stake system.
+  </li>
+</ul>
