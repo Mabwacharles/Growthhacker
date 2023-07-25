@@ -43,6 +43,33 @@ By leveraging the complexity of a person's social network, this proof-of-personh
 
 Most projects use a combination of the two forms of proof of personhood.
 
+### Building Blocks For PoP
+
+This section provides an overview of the essential building blocks to proof of personhood mechanism: "deduplication" to ensure a single verification per individual, "authentication" to guarantee that only the genuine owner of the proof of personhood credential can utilize it, and "recovery" procedures in situations where credentials are lost or compromised. The discussion focuses on these key elements at a high level.
+
+<ol>
+  <li>
+    <strong>Deduplication</strong>
+  </li>{' '}
+  To be effective, a Proof of Personhood (PoP) must incorporate a concept of uniqueness. If the PoP
+  can be obtained and transferred multiple times to fraudulent actors or bots, it loses its
+  reliability and fails in its intended role. Hence, a PoP mechanism must implement deduplication
+  among users who receive a proof of personhood credential. Achieving this is the most difficult
+  challenge for any PoP mechanism.
+  <li>
+    <strong>Authentication</strong>
+  </li> Ensuring the usefulness of PoP credentials involves making them difficult to transfer to prevent
+  fraud and protect individuals. Authentication is vital to verify the rightful owner of the PoP credential,
+  even if wallets or phones change hands. This approach is akin to airline boarding, where both possession
+  of a valid travel document and identity consistency are confirmed for high-integrity use cases. Minimizing
+  personal information while tying credentials to unique individuals is crucial in identity systems.
+  <li>
+    <strong>Recovery</strong>
+  </li>
+  In cases where the user loses access to their credentials or experiences credential compromise, robust
+  recovery mechanisms become essential.
+</ol>
+
 ### Potential Risks of Proof of Personhood
 
 <ol>
