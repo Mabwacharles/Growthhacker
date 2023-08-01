@@ -48,7 +48,7 @@ const projectsData = [
     href: 'https://twitter.com/i/spaces/1ypJddObQzrJW?s=20',
   },
   {
-    title: 'The Time Machine',
+    title: 'Intro to Carbon Credits',
     description: `Carbon credits in Africa provide a win-win opportunity for both the environment and local communities, encouraging sustainable practices & generating revenue for development. On April 20th the Celo Kenya team hosted Nyangena Brian Okemwa from Verst Carbon for a discussion on Carbon markets.`,
     imgSrc: '/static/images/canada/carbon.jpeg',
     href: 'https://twitter.com/i/spaces/1rmxPkNrYDbJN?s=20',
