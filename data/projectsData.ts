@@ -1,5 +1,17 @@
 const projectsData = [
   {
+    title: 'DeFi in Emerging Markets',
+    description: `DeFi offers a decentralized and permissionless platform that allows users to access a wide range of financial services without relying on intermediaries such as banks or financial institutions. In emerging markets, DeFi has the potential to transform the way people access financial services and manage their assets. In this Twitter space we explore and delve deep into Defi in Emerging Markets with Christian Duffus from Fonbnk.`,
+    imgSrc: '/static/images/canada/emerging-markets.jpg',
+    href: 'https://twitter.com/i/spaces/1OwxWwwLdWDxQ?s=20',
+  },
+  {
+    title: 'Web3 Business Models for the Creator Economy',
+    description: `The Creator Economy is experiencing a paradigm shift with the emergence of Web3 technology. In this twitter space we explore Web3 Business Models for the creator economy with Dan Karani from Unicorn Growth Capital.`,
+    imgSrc: '/static/images/canada/business-model.jpg',
+    href: 'https://twitter.com/i/spaces/1RDGlarDeMMJL?s=20',
+  },
+  {
     title: 'Regenerative Finance for Sustainable Agriculture Twitter Space',
     description: `Regenerative finance (ReFi) 🌱 is an emerging financial system that aims to align financial incentives with the regeneration of natural and social systems. It is based on the principles of regenerative economics, which argues that the economy should be designed to create wealth in a way that is beneficial to all and does not harm the environment. I recently held an informative twitter space on Regenerative Finance, listen in below`,
     imgSrc: '/static/images/canada/refi.jpeg',
