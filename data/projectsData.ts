@@ -9,7 +9,7 @@ const projectsData = [
     title: 'Web3 Business Models for the Creator Economy',
     description: `The Creator Economy is experiencing a paradigm shift with the emergence of Web3 technology. In this twitter space we explore Web3 Business Models for the creator economy with Dan Karani from Unicorn Growth Capital.`,
     imgSrc: '/static/images/canada/business-model.jpg',
-    href: 'https://twitter.com/i/spaces/1RDGlarDeMMJL?s=20',
+    href: 'https://mabwa.netlify.app/blog/nested-route/Web3-Business-Models-for-the-Creator-Economy',
   },
   {
     title: 'Regenerative Finance for Sustainable Agriculture Twitter Space',
