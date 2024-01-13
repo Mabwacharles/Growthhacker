@@ -1,5 +1,17 @@
 const projectsData = [
   {
+    title: 'Community Event at Moi University',
+    description: `In October, I spearheaded an impactful University event at Moi University, where we conducted comprehensive training sessions on Web3 technologies, best practices, and proficiently guided participants through the onboarding process to kickstart their journey into building on Celo. The event garnered immense enthusiasm, drawing in a remarkable attendance of over 200 developers eager to delve into the world of decentralized applications. This initiative not only enriched participants with valuable knowledge but also paved the way for a vibrant community of skilled individuals ready to contribute to the transformative landscape of blockchain technology.`,
+    imgSrc: '/static/images/canada/celo_moi.jpeg',
+    href: '#',
+  },
+  {
+    title: 'Africas Talking Summit 23',
+    description: `Showcased the innovative strides of Celo Foundation as a featured speaker at the Africas Talking Summit, delivering an engaging presentation on the transformative potential of Web 3. Successfully facilitated the onboarding of an impressive 500 users to the Celo platform, charting a course for a dynamic and inclusive digital future.`,
+    imgSrc: '/static/images/canada/africastalking.jpeg',
+    href: '#',
+  },
+  {
     title: 'Regenerative Finance in Action Twitter Space',
     description: `Embark on a financial revolution with me! On November 2nd, 2023, I hosted an electrifying Twitter space titled 'Regenerative Finance in Action.' Dive into the dynamic world of regenerative finance as we explore its transformative potential, unveiling intriguing use cases and envisioning the future of ReFi. Join the vibrant community that gathered, with over 60 eager minds seeking enlightenment on ReFi. Their enthusiasm was palpable through the riveting questions that fueled our session. Don't miss out tune in below, and share your insightful thoughts in the comment section. Let's reshape the financial landscape together!`,
     imgSrc: '/static/images/canada/refi_action.jpeg',
