@@ -1,5 +1,17 @@
 const projectsData = [
   {
+    title: 'Regenerative Finance in Action Twitter Space',
+    description: `Embark on a financial revolution with me! On November 2nd, 2023, I hosted an electrifying Twitter space titled 'Regenerative Finance in Action.' Dive into the dynamic world of regenerative finance as we explore its transformative potential, unveiling intriguing use cases and envisioning the future of ReFi. Join the vibrant community that gathered, with over 60 eager minds seeking enlightenment on ReFi. Their enthusiasm was palpable through the riveting questions that fueled our session. Don't miss out tune in below, and share your insightful thoughts in the comment section. Let's reshape the financial landscape together!`,
+    imgSrc: '/static/images/canada/refi_action.jpeg',
+    href: 'https://twitter.com/i/spaces/1zqKVqwNkDMxB?s=20',
+  },
+  {
+    title: 'Community Event at Technical University of Mombas, November Edition',
+    description: `Sparkling triumph achieved as I orchestrated and hosted the spectacular Celo University extravaganza at the vibrant Technical University of Mombasa! A dynamic convergence unfolded, uniting a formidable force of over 100 enthusiastic developers, all hungry to dive into the realms of Web3, passionately construct innovative solutions, and engage in exhilarating Code Challenges. Witnessing this tech symphony, I not only steered the ship but also skillfully ushered in a stellar cohort of 100+ developers into the Celo ecosystem. Brace yourself for a wave of awe-inspiring products, meticulously crafted by this talented collective!`,
+    imgSrc: '/static/images/canada/celo_tum.jpeg',
+    href: '#',
+  },
+  {
     title: 'DeFi in Emerging Markets',
     description: `DeFi offers a decentralized and permissionless platform that allows users to access a wide range of financial services without relying on intermediaries such as banks or financial institutions. In emerging markets, DeFi has the potential to transform the way people access financial services and manage their assets. In this Twitter space we explore and delve deep into Defi in Emerging Markets with Christian Duffus from Fonbnk.`,
     imgSrc: '/static/images/canada/emerging-markets.jpg',
@@ -39,7 +51,7 @@ const projectsData = [
     title: 'Digital Identity in Web3',
     description: `Digital Identity is one of the most exciting and promising use cases for Web3. In a world where privacy and security are increasingly important, having control over our personal data and identity is crucial. In Web3, your digital identity is more than just a username and password - its a collection of decentralized identifiers (DIDs) that are unique to you and can be used to verify your identity across different platforms and applications.`,
     imgSrc: '/static/images/canada/identity.jpeg',
-    href: '/blog/nested-route/Intro-to-Carbon-Credits',
+    href: '#',
   },
   {
     title: 'Web3 Commerce',
